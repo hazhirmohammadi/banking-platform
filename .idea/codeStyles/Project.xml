@@ -45,9 +45,9 @@
       <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true" />
       <option name="SOFT_MARGINS" value="90" />
       <indentOptions>
-        <option name="INDENT_SIZE" value="1" />
+        <option name="INDENT_SIZE" value="2" />
         <option name="CONTINUATION_INDENT_SIZE" value="1" />
-        <option name="TAB_SIZE" value="1" />
+        <option name="TAB_SIZE" value="2" />
       </indentOptions>
     </codeStyleSettings>
     <codeStyleSettings language="Vue">
