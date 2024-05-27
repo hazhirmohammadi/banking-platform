@@ -27,8 +27,10 @@ const Home = () => {
    </div>
 
    <RightSidebar
+    // @ts-ignore
     user={loggedIn}
     transactions={[]}
+    // @ts-ignore
     banks={[{currentBalance:123.60},{currentBalance:500.92}]}
    />
 
