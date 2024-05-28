@@ -20,7 +20,10 @@ export const signIn = async () => {
 };
 
 export const signUp = async (userData: SignUpParams) => {
+
+  console.log("user.action!!");
    const { email, password, firstName, lastName } = userData;
+
    try {
      const { account } = await createAdminClient();
 

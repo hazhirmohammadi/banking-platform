@@ -41,7 +41,9 @@ const AuthForm = ({ type }: { type: string }) => {
    //Sign up with Appwrite & create plain link token
 
    if (type === "sign-up") {
+     console.log("sign-up",data);
     const newUser = await signUp(data);
+
     setUser(newUser);
    }
    if (type === "sign-in") {
