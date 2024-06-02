@@ -1,5 +1,8 @@
 "use client";
-import { useState } from "react";
+import {
+  useEffect,
+  useState,
+} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,18 +11,23 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomInput from "@/components/CustomInput";
-import { authFormSchema } from "@/lib/utils";
+import {
+  authFormSchema,
+  cn,
+} from "@/lib/utils";
 import {
   Loader2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import {
+  getLoggedInUser,
   signIn,
   signUp,
 } from "@/lib/actions/user.actions";
 
 
 const AuthForm = ({ type }: { type: string }) => {
+
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -39,20 +47,20 @@ const AuthForm = ({ type }: { type: string }) => {
     setIsLoading(true);
     try {
       //Sign up with Appwrite & create plain link token
-debugger
+
       if (type === "sign-up") {
         console.log("sign-up", data);
         const newUser = await signUp(data);
-        console.log(typeof  newUser);
+        console.log(typeof newUser);
         console.log(5);
         setUser(newUser);
       }
       if (type === "sign-in") {
-        // const response = await signIn({
-        //  email: data.email,
-        //  password: data.password,
-        // });
-        // if (response) router.push("/");
+        const response = await signIn({
+          email: data.email,
+          password: data.password,
+        });
+        if (response) router.push("/");
       }
     } catch (error) {
       console.log(error);
@@ -99,7 +107,7 @@ debugger
       <>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            {type === "sign-up" && (
+            { type === "sign-up" && (
              <>
                <div className="flex gap-4">
                  <CustomInput
@@ -181,6 +189,8 @@ debugger
              : "Already hava an account ?"
             }
             <Link
+             onClick={()=>{
+               console.log(type);}}
              className="form-link"
              href={type === "sign-in" ? "/sign-up" : "/sign-in"}
             >
