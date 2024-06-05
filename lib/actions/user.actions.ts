@@ -8,6 +8,11 @@ import { ID } from "node-appwrite";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { parseStringify } from "@/lib/utils";
+import {
+  CountryCode,
+  Products,
+} from "plaid";
+import { plaidClient } from "@/lib/Plaid";
 
 export const signIn = async ({ email, password }: signInProps) => {
   try {
@@ -63,13 +68,40 @@ export async function getLoggedInUser() {
   }
 }
 
-//
 export const logoutAccount = async () => {
   try {
     const { account } = await createSessionClient();
     cookies().delete("appwrite-session");
-    await account.deleteSession("current")
+    await account.deleteSession("current");
   } catch (error) {
     return null;
+  }
+};
+
+export const createLinkToken = async (user: User) => {
+  try {
+    const tokenParams = {
+      user: {
+        client_user_id: user.$id,
+      },
+      client_name: user.name,
+      products: ["auth"] as Products[],
+      language: "en",
+      country_codes: ["US"] as CountryCode[],
+    };
+
+    const response = await plaidClient.linkTokenCreate(tokenParams);
+
+    return parseStringify({ linkToken: response.data.link_token });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const exchangePublicToken = async ({ publicToken, user }: exchangePublicTokenProps) => {
+  try {
+  
+  }catch (error) {
+    console.log("An error occurred while creating exchanging token:",error);
   }
 };
